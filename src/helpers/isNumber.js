@@ -4,4 +4,4 @@
  * @param {*} value
  * @returns {boolean} Returns `true` if `value` is a number, else `false`.
  */
-export default value => typeof value === 'number';
+export default (value) => typeof value === 'number';

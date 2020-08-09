@@ -5,4 +5,4 @@ import isNull from './isNull';
  * @param {*} value
  * @returns {boolean} Returns `true` if `value` is an object, else `false`.
  */
-export default value => !isNull(value) && typeof value === 'object';
+export default (value) => !isNull(value) && typeof value === 'object';

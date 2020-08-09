@@ -4,4 +4,4 @@
  * @param {*} value
  * @returns {boolean} Returns `true` if `value` is a function, else `false`.
  */
-export default value => typeof value === 'function';
+export default (value) => typeof value === 'function';
