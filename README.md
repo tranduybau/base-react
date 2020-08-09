@@ -1,58 +1,74 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# RULES
+## Git flow
 
-## Available Scripts
+Reference flow: [A successful Git branching model](http://nvie.com/posts/a-successful-git-branching-model/)
 
-In the project directory, you can run:
+We define here for a short guide.
 
-### `yarn start`
+### The main branches
+The central repo holds one main branch with an infinite lifetime:
+* `master`
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Note:
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+1. We consider `origin/master` to be the main branch where the source code of HEAD always reflects a state with the latest `delivered development changes for the next release`. This is also called `integration branch`.
 
-### `yarn test`
+### Supporting branches and branch naming rules
+* Checkout from: `master`.
+* Must merge back into: `master`.
+* Branch naming convention:
+  * Except `master`, `develop`.
+  * Must be `tracker/id_of_task||name_of_task`:
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+  * `Tracker`:
+    * `task` for normal task, feature.
+    * `fix` or `hotfix` for bug fix.
+    * `release` for release branch from `develop` to `master` for stable version.
+  * `id_of_task||name_of_task` for example: `Create-XXX` or `task_1234`...
 
-### `yarn build`
+### Commit message rules
+* Allow for multi-commits, so please add a commit after you've done a feature/bug,... then continue coding.
+* Format `[Type] Message`.
+* Type:
+  * **add**: add file(s) or feature.
+  * **modify**: Change feature not bugs (may a change request).
+  * **fix**: For fix a normal bugs.
+  * **hotfix**: For immediately bug fix.
+  * **revert**: Revert the previous changes. (this should rarely or never happend)
+* Message: the short and meaningful purpose of what you've done!
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+For Example:
+* `[add] login UI`.
+* `[modify] Change behavior when login wrong password`.
+* `[fix] Can not refresh the chat message`.
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+### Fix conflict error when rebasing
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+If conflict error occurs when rebasing, it will be displayed as below (at this moment, you will be moved to anonymous branch automatically).
+```sh
+$ git rebase develop
+First, rewinding head to replay your work on top of it...
+Applying: refs #1234 Can not remove cache
+Using index info to reconstruct a base tree...
+Falling back to patching base and 3-way merge...
+Auto-merging path/to/conflicting/file
+CONFLICT (add/add): Merge conflict in path/to/conflicting/file
+Failed to merge in the changes.
+Patch failed at 0001 refs #1234 Can not remove cache
+The copy of the patch that failed is found in:
+    /path/to/working/dir/.git/rebase-apply/patch
 
-## Learn More
+When you have resolved this problem, run "git rebase --continue".
+If you prefer to skip this patch, run "git rebase --skip" instead.
+To check out the original branch and stop rebasing, run "git rebase --abort".
+```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+1. Fix all the conflicts manually (code which is surrounded by <<< and >>>)
+Use `git rebase --abort` if you want to abort rebase process.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+2. After fixing all conflicts, continue your rebase process.
 
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `yarn build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+    ```sh
+    $ git add .
+    $ git rebase --continue
+    ```

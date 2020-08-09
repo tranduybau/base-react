@@ -4,4 +4,4 @@
  * @param {*} value
  * @returns {boolean} Returns `true` if `value` is `undefined`, else `false`.
  */
-export default value => value === undefined;
+export default (value) => value === undefined;
